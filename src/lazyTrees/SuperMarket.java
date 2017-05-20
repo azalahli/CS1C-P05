@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Implements BST with lazy deletion to keep track of total inventory ("deleted" + non deleted) 
  * and current inventory (non deleted only).
  *
- * @author Foothill College, [YOUR NAME HERE]
+ * @author Foothill College, Myron Pow
  */
 public class SuperMarket 
 {
@@ -49,7 +49,7 @@ public class SuperMarket
 		if (!isFound)
 		{
 			// TODO: Modify insert method to work with lazy deletion such that it updates
-			//       both hard and soft sizes. 
+			// both hard and soft sizes.
 			inventory.insert(tmp);
 
 			// NOTE: Need to check if the item was lazily deleted, then we need to increment the count
@@ -58,6 +58,8 @@ public class SuperMarket
 			{
 				found.incrementCount();
 			}
+
+			// avoid double incrementing a newly inserted item
 			return;
 		}
 

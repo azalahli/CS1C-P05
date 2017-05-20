@@ -90,18 +90,18 @@ public class LazySearchTree<E extends Comparable< ? super E > >
 
     public boolean remove(E x) {
         int oldSize = mSize;
-        mRoot = remove(mRoot, x);
+        remove(mRoot, x);
         return (mSize != oldSize);
     }
 
     public <F extends Traverser<? super E>>
     void traverseSoft(F func) {
-        traverse(func, mRoot);
+        traverseSoft(func, mRoot);
     }
 
     public <F extends Traverser<? super E>>
     void traverseHard(F func) {
-        traverse(func, mRoot);
+        traverseHard(func, mRoot);
     }
 
     public Object clone() throws CloneNotSupportedException {
@@ -145,42 +145,43 @@ public class LazySearchTree<E extends Comparable< ? super E > >
             root.lftChild = insert(root.lftChild, x);
         else if (compareResult > 0)
             root.rtChild = insert(root.rtChild, x);
+        else if (root.deleted){
+            root.deleted = false;
+            mSize++;
+        }
 
         return root;
     }
 
-    protected LazySTNode remove(LazySTNode root, E x) {
-        int compareResult;  // avoid multiple calls to compareTo()
-
-        if (root == null)
-            return null;
-
-        compareResult = x.compareTo(root.data);
-        if (compareResult < 0)
-            root.lftChild = remove(root.lftChild, x);
-        else if (compareResult > 0)
-            root.rtChild = remove(root.rtChild, x);
-
-            // found the node
-        else if (root.lftChild != null && root.rtChild != null) {
-            root.data = findMin(root.rtChild).data;
-            root.rtChild = remove(root.rtChild, root.data);
-        } else {
-            root =
-                    (root.lftChild != null) ? root.lftChild : root.rtChild;
+    protected void remove(LazySTNode root, E x) {
+        if(root == null)
+            return;
+        LazySTNode temp = find(root, x);
+        if (temp != null){
+            temp.deleted = true;
             mSize--;
         }
-        return root;
     }
 
     protected <F extends Traverser<? super E>>
-    void traverse(F func, LazySTNode treeNode) {
+    void traverseHard(F func, LazySTNode treeNode) {
         if (treeNode == null)
             return;
 
-        traverse(func, treeNode.lftChild);
+        traverseHard(func, treeNode.lftChild);
         func.visit(treeNode.data);
-        traverse(func, treeNode.rtChild);
+        traverseHard(func, treeNode.rtChild);
+    }
+
+    protected <F extends Traverser<? super E>>
+    void traverseSoft(F func, LazySTNode treeNode) {
+        if (treeNode == null)
+            return;
+
+        traverseSoft(func, treeNode.lftChild);
+        if (!treeNode.deleted)
+            func.visit(treeNode.data);
+        traverseSoft(func, treeNode.rtChild);
     }
 
     protected LazySTNode find(LazySTNode root, E x) {
@@ -194,6 +195,8 @@ public class LazySearchTree<E extends Comparable< ? super E > >
             return find(root.lftChild, x);
         if (compareResult > 0)
             return find(root.rtChild, x);
+        if (root.deleted)
+            return null;
         return root;   // found
     }
 
