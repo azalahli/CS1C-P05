@@ -6,6 +6,7 @@ import java.util.*;
 /**
  * Implementation of a Lazy Binary search tree
  * File functions mostly copied from FHsearch_tree
+ * Final Version
  * @author Myron Pow 5/17/17
  */
 public class LazySearchTree<E extends Comparable< ? super E > >
