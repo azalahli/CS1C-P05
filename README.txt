@@ -4,17 +4,13 @@ azalahli-project05/
 
 Description: LazyTrees w/o garbage collection
 
-src/stacks/Navigator.java ->
-	src/queues/Jukebox.Java
-		Class that implements a jukebox playlist
-
-src/stacks/StackList.java ->
-	src/queues/Queue.java
-	Class that implements queues as a singly linked list of nodes
-
+src/lazyTrees/LazySearchTree.java
+	implementation of a Lazy Binary Search Tree with single field node wrappers
+src/lazyTrees/Traverser.java
+	implementation of printObject, as well as instructor traverser class
 resources/RUN.txt
-	console output of MyTunes.java
-resources/tunes_spelling.txt
-	Test case of a misspelled command + dequeuing with only some playlists filled
+	console output of SuperMarket.java
+resources/inventory_log_example.txt
+	Canvas verion of inventory log
 README.txt
 	description of files submitted
