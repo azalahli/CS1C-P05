@@ -2,6 +2,8 @@ package lazyTrees;
 
 /**
  * Created by Mober6 on 5/17/2017.
+ * Traverser and printObject
+ * @author Myron Pow 5/17/2017
  */
 
 public interface Traverser<E> {
@@ -9,6 +11,10 @@ public interface Traverser<E> {
 }
 
 class PrintObject<E> implements Traverser<E> {
+    /**
+     * Prints out data from node object
+     * @param x xused for looking at and printing data from nodes
+     */
     public void visit(E x) {
         System.out.print(x + " ");
     }
