@@ -1,0 +1,12 @@
+FEEDBACK:
+
+-10% late submission.
+
+
+Nice clean implementation of your LazySearchTree class with lazy deletion!
+
+
+Good testing of your implementation.
+
+-Bita.
+
